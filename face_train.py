@@ -2,7 +2,7 @@ import torch
 import itertools
 import torch.nn as nn
 from tqdm import tqdm
-from model import dcgan
+from model import face_dcgan
 import torchvision.utils as utils
 import torch.optim as optim
 from torchvision import datasets
@@ -20,8 +20,8 @@ if __name__ == '__main__':
     train_data = datasets.ImageFolder('./', transform)
     train_data = DataLoader(train_data, batch_size=128, shuffle=True)
 
-    G = dcgan.generator()
-    D = dcgan.discriminator()
+    G = face_dcgan.generator()
+    D = face_dcgan.discriminator()
     G.weight_init(mean=0.0, std=0.02)
     D.weight_init(mean=0.0, std=0.02)
     G.cuda()
