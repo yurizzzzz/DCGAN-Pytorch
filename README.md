@@ -3,7 +3,7 @@ This is the implementation of DCGAN([Deep Convolutional Generative Adversarial N
 
 ![](https://img04.sogoucdn.com/app/a/100520146/f4f292315764a940a3d143164b8afaec)
 
-# Environment
+# Development Environment
 - pytorch 1.4
 - Python 3.7
 - torchvision 1.1
