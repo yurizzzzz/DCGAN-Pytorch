@@ -16,29 +16,36 @@ This is the implementation of DCGAN([Deep Convolutional Generative Adversarial N
 # Content
 ```
 |-- data
-|   |-- MNIST
+|   |-- MNIST                 # Mnist dataset
 |       |-- processed
 |       |   |-- test.pt
-|       |   `-- training.pt
+|       |   |-- training.pt
 |       |-- raw
-|           |-- t10k-images-idx3-ubyte
-|           |-- t10k-images-idx3-ubyte.gz
-|           |-- t10k-labels-idx1-ubyte
-|           |-- t10k-labels-idx1-ubyte.gz
-|           |-- train-images-idx3-ubyte
-|           |-- train-images-idx3-ubyte.gz
-|           |-- train-labels-idx1-ubyte
-|           `-- train-labels-idx1-ubyte.gz
-|-- face_train.py           # Train to generate Anime Avatar
-|-- model                 
-|   |-- dcgan.py            # DCGAN Net
-|-- preprocess.py           # Resize the dataset images
-|-- generate_gif.py         # Generate gif
-|-- test.py
-|-- train.py                # Train to generate numbers
+|-- face_train.py             # train to generate the Anime Avatar
+|-- generate_gif.py           # generate gif images
+|-- mnist_train.py            # train to generate the mnist numbers
+|-- model                   
+|   |-- __pycache__
+|   |   |-- dcgan.cpython-37.pyc
+|   |-- face_dcgan.py         # DCGAN (3 channels)
+|   |-- mnist_dcgan.py        # DCGAN (1 channel)
+|-- preprocess.py             # Crop images
+|-- result                    # result gif
+|   |-- comic.gif
+|   |-- mnist.gif
 ```
 
 # Quick Start
+- Train the Anime Avatar (you can modify the epochs and other args)  
+  ```
+  $ cd DCGAN-pytorh-master
+  $ ./face_train.py
+  ```
+- Train the mnist numbers (you can modify the epochs and other args) 
+  ```
+  $ cd DCGAN-pytorh-master
+  $ ./mnist_train.py
+  ```
 
 # Anime Avatar
 - Generate the Anime Avatar using fixed random noise (totally 60 epochs)  
