@@ -1,8 +1,9 @@
 import torch
+import codecs
 import itertools
 import torch.nn as nn
 from tqdm import tqdm
-from model import dcgan
+from model import mnist_dcgan
 import torchvision.utils as utils
 import torch.optim as optim
 from torchvision import datasets
@@ -19,8 +20,8 @@ if __name__ == '__main__':
     train_mnist = DataLoader(datasets.MNIST('data', train=True, download=True, transform=transform), batch_size=128,
                              shuffle=True)
 
-    G = dcgan.generator()
-    D = dcgan.discriminator()
+    G = mnist_dcgan.generator()
+    D = mnist_dcgan.discriminator()
     G.weight_init(mean=0.0, std=0.02)
     D.weight_init(mean=0.0, std=0.02)
     G.cuda()
@@ -30,7 +31,13 @@ if __name__ == '__main__':
     G_optimizer = optim.Adam(G.parameters(), lr=0.0002, betas=(0.5, 0.999))
     D_optimizer = optim.Adam(D.parameters(), lr=0.0002, betas=(0.5, 0.999))
 
-    for epoch in range(1, 101):
+    for epoch in range(1, 51):
+        if epoch > 10:
+            for par in G_optimizer.param_groups:
+                par['lr'] = 0.00005
+            for par in D_optimizer.param_groups:
+                par['lr'] = 0.00005
+
         G_loss = []
         D_loss = []
 
@@ -72,6 +79,11 @@ if __name__ == '__main__':
                 epoch, torch.mean(torch.FloatTensor(D_loss)), torch.mean(torch.FloatTensor(G_loss)))
             train_mnist.set_description(description)
             train_mnist.update()
+
+        with codecs.open('./g_loss.txt', mode='a', encoding='utf-8') as file_txt:
+            file_txt.write(str(torch.mean(torch.FloatTensor(G_loss))) + '\n')
+        with codecs.open('./d_loss.txt', mode='a', encoding='utf-8') as file_txt:
+            file_txt.write(str(torch.mean(torch.FloatTensor(D_loss))) + '\n')
 
         G.eval()
         result = G(input_fixed_noise)
