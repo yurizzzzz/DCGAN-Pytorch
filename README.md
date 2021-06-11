@@ -33,9 +33,15 @@ This is the implementation of DCGAN([Deep Convolutional Generative Adversarial N
 |-- model                 
 |   |-- dcgan.py            # DCGAN Net
 |-- preprocess.py           # Resize the dataset images
+|-- generate_gif.py         # Generate gif
 |-- test.py
 |-- train.py                # Train to generate numbers
 ```
 
 # Quick Start
+
+# Anime Avatar
+- Generate the Anime Avatar using fixed random noise (totally 60 epochs)  
+  
+  ![](https://i0.hdslb.com/bfs/album/910202d451fc1eec989e6b1f458c85e872c0d92b.gif)
 
