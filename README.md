@@ -1,5 +1,6 @@
 # DCAGN-Pytorch
-This is the implementation of DCGAN([Deep Convolutional Generative Adversarial Networks](https://arxiv.org/pdf/1511.06434.pdf)) using pytorch and we generate the mnist numbers and Anime Avatar in this project.
+This is the implementation of DCGAN([Deep Convolutional Generative Adversarial Networks](https://arxiv.org/pdf/1511.06434.pdf)) using pytorch and we generate the mnist numbers and Anime Avatar in this project.  
+
 ![](https://img04.sogoucdn.com/app/a/100520146/f4f292315764a940a3d143164b8afaec)
 
 # Environment
