@@ -33,6 +33,7 @@ This is the implementation of DCGAN([Deep Convolutional Generative Adversarial N
 |-- model                 
 |   |-- dcgan.py            # DCGAN Net
 |-- preprocess.py           # Resize the dataset images
+|-- generate_gif.py         # Generate gif
 |-- test.py
 |-- train.py                # Train to generate numbers
 ```
