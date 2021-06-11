@@ -50,8 +50,10 @@ This is the implementation of DCGAN([Deep Convolutional Generative Adversarial N
 # Results
 ## Anime Avatar
 - Generate the Anime Avatar using fixed random noise (totally 60 epochs)  
+  
   ![comic](https://github.com/FanDady/DCGAN-Pytorch/blob/master/result/comic.gif)
 
 ## Mnist numbers
 - Generate the mnist numbers using fixed random noise (totally 20 epochs)  
+  
   ![comic](https://github.com/FanDady/DCGAN-Pytorch/blob/master/result/mnist.gif)
