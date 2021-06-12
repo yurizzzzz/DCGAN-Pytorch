@@ -95,11 +95,11 @@ if __name__ == '__main__':
 
         with codecs.open('./g_loss.txt', mode='a', encoding='utf-8') as file_txt:
             g_loss = torch.mean(torch.FloatTensor(G_loss))
-            g_loss = g_loss.numpy()[0]
+            g_loss = g_loss.numpy()
             file_txt.write(str(g_loss) + '\n')
         with codecs.open('./d_loss.txt', mode='a', encoding='utf-8') as file_txt:
             d_loss = torch.mean(torch.FloatTensor(D_loss))
-            d_loss = d_loss.numpy()[0]
+            d_loss = d_loss.numpy()
             file_txt.write(str(d_loss) + '\n')
 
         G.eval()
