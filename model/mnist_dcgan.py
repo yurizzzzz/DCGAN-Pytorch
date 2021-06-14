@@ -1,24 +1,25 @@
 import torch.nn as nn
 
-
+'''
 def normal_init(m, mean, std):
     if isinstance(m, nn.ConvTranspose2d) or isinstance(m, nn.Conv2d):
         m.weight.data.normal_(mean, std)
         m.bias.data.zero_()
+'''
 
 
 class generator(nn.Module):
     def __init__(self):
         super(generator, self).__init__()
-        self.deconv1 = nn.ConvTranspose2d(100, 1024, kernel_size=4, stride=1, padding=0, bias=False)
-        self.bn1 = nn.BatchNorm2d(1024)
-        self.deconv2 = nn.ConvTranspose2d(1024, 512, kernel_size=4, stride=2, padding=1, bias=False)
-        self.bn2 = nn.BatchNorm2d(512)
-        self.deconv3 = nn.ConvTranspose2d(512, 256, kernel_size=4, stride=2, padding=1, bias=False)
-        self.bn3 = nn.BatchNorm2d(256)
-        self.deconv4 = nn.ConvTranspose2d(256, 128, kernel_size=4, stride=2, padding=1, bias=False)
-        self.bn4 = nn.BatchNorm2d(128)
-        self.deconv5 = nn.ConvTranspose2d(128, 1, kernel_size=4, stride=2, padding=1, bias=False)
+        self.deconv1 = nn.ConvTranspose2d(100, 512, kernel_size=4, stride=1, padding=0, bias=False)
+        self.bn1 = nn.BatchNorm2d(512)
+        self.deconv2 = nn.ConvTranspose2d(512, 256, kernel_size=4, stride=2, padding=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(256)
+        self.deconv3 = nn.ConvTranspose2d(256, 128, kernel_size=4, stride=2, padding=1, bias=False)
+        self.bn3 = nn.BatchNorm2d(128)
+        self.deconv4 = nn.ConvTranspose2d(128, 64, kernel_size=4, stride=2, padding=1, bias=False)
+        self.bn4 = nn.BatchNorm2d(64)
+        self.deconv5 = nn.ConvTranspose2d(64, 1, kernel_size=4, stride=2, padding=1, bias=False)
         self.relu = nn.ReLU()
         self.tanh = nn.Tanh()
 
@@ -31,30 +32,33 @@ class generator(nn.Module):
 
         return output
 
+
+'''
     def weight_init(self, mean, std):
-        # for m in self._modules:
-        #     normal_init(self._modules[m], mean, std)
-
         for m in self._modules:
-            if isinstance(m, nn.ConvTranspose2d) or isinstance(m, nn.Conv2d):
-                nn.init.normal_(m.weight.data, mean, std)
+            normal_init(self._modules[m], mean, std)
 
-            elif isinstance(m, nn.BatchNorm2d):
-                nn.init.normal_(m.weight.data, mean, std)
-                nn.init.constant_(m.bias.data, 0)
+        # for m in self._modules:
+        #     if isinstance(m, nn.ConvTranspose2d):
+        #         nn.init.normal_(m.weight.data, mean, std)
+        #
+        #     elif isinstance(m, nn.BatchNorm2d):
+        #         nn.init.normal_(m.weight.data, mean, std)
+        #         nn.init.constant_(m.bias.data, 0)
+'''
 
 
 class discriminator(nn.Module):
     def __init__(self):
         super(discriminator, self).__init__()
-        self.conv1 = nn.Conv2d(1, 128, kernel_size=4, stride=2, padding=1, bias=False)
-        self.conv2 = nn.Conv2d(128, 256, kernel_size=4, stride=2, padding=1, bias=False)
-        self.bn1 = nn.BatchNorm2d(256)
-        self.conv3 = nn.Conv2d(256, 512, kernel_size=4, stride=2, padding=1, bias=False)
-        self.bn2 = nn.BatchNorm2d(512)
-        self.conv4 = nn.Conv2d(512, 1024, kernel_size=4, stride=2, padding=1, bias=False)
-        self.bn3 = nn.BatchNorm2d(1024)
-        self.conv5 = nn.Conv2d(1024, 1, kernel_size=4, stride=1, padding=0, bias=False)
+        self.conv1 = nn.Conv2d(1, 64, kernel_size=4, stride=2, padding=1, bias=False)
+        self.conv2 = nn.Conv2d(64, 128, kernel_size=4, stride=2, padding=1, bias=False)
+        self.bn1 = nn.BatchNorm2d(128)
+        self.conv3 = nn.Conv2d(128, 256, kernel_size=4, stride=2, padding=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(256)
+        self.conv4 = nn.Conv2d(256, 512, kernel_size=4, stride=2, padding=1, bias=False)
+        self.bn3 = nn.BatchNorm2d(512)
+        self.conv5 = nn.Conv2d(512, 1, kernel_size=4, stride=1, padding=0, bias=False)
         self.leakyrelu = nn.LeakyReLU(negative_slope=0.2)
         self.sigmoid = nn.Sigmoid()
 
@@ -67,14 +71,17 @@ class discriminator(nn.Module):
 
         return output
 
+
+'''
     def weight_init(self, mean, std):
-        # for m in self._modules:
-        #     normal_init(self._modules[m], mean, std)
-
         for m in self._modules:
-            if isinstance(m, nn.ConvTranspose2d) or isinstance(m, nn.Conv2d):
-                nn.init.normal_(m.weight.data, mean, std)
+            normal_init(self._modules[m], mean, std)
 
-            elif isinstance(m, nn.BatchNorm2d):
-                nn.init.normal_(m.weight.data, mean, std)
-                nn.init.constant_(m.bias.data, 0)
+        # for m in self._modules:
+        #     if isinstance(m, nn.ConvTranspose2d):
+        #         nn.init.normal_(m.weight.data, mean, std)
+        #
+        #     elif isinstance(m, nn.BatchNorm2d):
+        #         nn.init.normal_(m.weight.data, mean, std)
+        #         nn.init.constant_(m.bias.data, 0)
+'''

@@ -54,6 +54,6 @@ This is the implementation of DCGAN([Deep Convolutional Generative Adversarial N
   ![comic](https://github.com/FanDady/DCGAN-Pytorch/blob/master/result/comic.gif)
 
 ## Mnist numbers
-- Generate the mnist numbers using fixed random noise (totally 20 epochs)  
+- Generate the mnist numbers using fixed random noise (totally 50 epochs)  
   
   ![comic](https://github.com/FanDady/DCGAN-Pytorch/blob/master/result/mnist.gif)

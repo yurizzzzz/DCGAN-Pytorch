@@ -1,6 +1,7 @@
 import torch
 import codecs
 import itertools
+import torch.nn.init as init
 import torch.nn as nn
 from tqdm import tqdm
 from model import mnist_dcgan
@@ -11,8 +12,15 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 
+
+def init_ws_bs(m):
+    if isinstance(m, nn.ConvTranspose2d):
+        init.normal_(m.weight.data, std=0.2)
+        init.normal_(m.bias.data, std=0.2)
+
+
 if __name__ == '__main__':
-    input_fixed_noise = torch.randn((25, 100, 1, 1))
+    input_fixed_noise = torch.randn((32, 100, 1, 1))
     input_fixed_noise = Variable(input_fixed_noise.cuda())
 
     transform = transforms.Compose([transforms.Resize(64), transforms.ToTensor(), transforms.Normalize([0.5], [0.5])])
@@ -22,21 +30,25 @@ if __name__ == '__main__':
 
     G = mnist_dcgan.generator()
     D = mnist_dcgan.discriminator()
-    G.weight_init(mean=0.0, std=0.02)
-    D.weight_init(mean=0.0, std=0.02)
+    # G.weight_init(mean=0.0, std=0.02)
+    # D.weight_init(mean=0.0, std=0.02)
     G.cuda()
     D.cuda()
+
+    init_ws_bs(G)
+    init_ws_bs(D)
+
     BCE_Loss = nn.BCELoss()
 
     G_optimizer = optim.Adam(G.parameters(), lr=0.0002, betas=(0.5, 0.999))
     D_optimizer = optim.Adam(D.parameters(), lr=0.0002, betas=(0.5, 0.999))
 
     for epoch in range(1, 51):
-        if epoch > 10:
-            for par in G_optimizer.param_groups:
-                par['lr'] = 0.00005
-            for par in D_optimizer.param_groups:
-                par['lr'] = 0.00005
+        # if epoch > 15:
+        #     for par in G_optimizer.param_groups:
+        #         par['lr'] = 0.00005
+        #     for par in D_optimizer.param_groups:
+        #         par['lr'] = 0.00005
 
         G_loss = []
         D_loss = []
@@ -81,11 +93,15 @@ if __name__ == '__main__':
             train_mnist.update()
 
         with codecs.open('./g_loss.txt', mode='a', encoding='utf-8') as file_txt:
-            file_txt.write(str(torch.mean(torch.FloatTensor(G_loss))) + '\n')
+            g_loss = torch.mean(torch.FloatTensor(G_loss))
+            g_loss = g_loss.numpy()
+            file_txt.write(str(g_loss) + '\n')
         with codecs.open('./d_loss.txt', mode='a', encoding='utf-8') as file_txt:
-            file_txt.write(str(torch.mean(torch.FloatTensor(D_loss))) + '\n')
+            d_loss = torch.mean(torch.FloatTensor(D_loss))
+            d_loss = d_loss.numpy()
+            file_txt.write(str(d_loss) + '\n')
 
         G.eval()
         result = G(input_fixed_noise)
         G.train()
-        utils.save_image(result[:24].detach().cpu(), '/home/result/' + str(epoch) + '.jpg')
+        utils.save_image(result[:32].detach().cpu(), '/home/result/' + str(epoch) + '.jpg')
