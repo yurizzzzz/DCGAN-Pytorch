@@ -106,3 +106,5 @@ if __name__ == '__main__':
         result = G(input_fixed_noise)
         G.train()
         utils.save_image(result[:32].detach().cpu(), '/home/result/' + str(epoch) + '.jpg')
+
+        torch.save(G.state_dict(), './checkpoint/checkpoint_' + str(epoch) + '.tar')
